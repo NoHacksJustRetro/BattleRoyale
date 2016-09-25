@@ -112,9 +112,9 @@ namespace BattleRoyale
 		{
 			API.consoleOutput("Getting players");
 			players.Clear();
-			foreach (NetHandle p in API.getAllPlayers())
+			foreach (Client p in API.getAllPlayers())
 			{
-				players.Add(new Player(p, true, API.getPlayerFromHandle(p)));
+				players.Add(new Player(p.CharacterHandle, true, p));
 			}
 		}
 
