@@ -50,7 +50,6 @@
     <Compile Include="BattleRoyale.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="OnConnected.cs" />
-    <Compile Include="OnPickup.cs" />
     <Compile Include="OnRespawn.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
