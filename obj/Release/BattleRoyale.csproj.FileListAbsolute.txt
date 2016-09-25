@@ -1,0 +1,10 @@
+C:\Users\Kompiuteris\Desktop\c#\Nemokyklai\BattleRoyale\bin\Release\BattleRoyale.dll
+C:\Users\Kompiuteris\Desktop\c#\Nemokyklai\BattleRoyale\bin\Release\BattleRoyale.pdb
+C:\Users\Kompiuteris\Desktop\c#\Nemokyklai\BattleRoyale\bin\Release\GTANetworkServer.exe
+C:\Users\Kompiuteris\Desktop\c#\Nemokyklai\BattleRoyale\bin\Release\GTANetworkShared.dll
+C:\Users\Kompiuteris\Desktop\c#\Nemokyklai\BattleRoyale\bin\Release\Lidgren.Network.dll
+C:\Users\Kompiuteris\Desktop\c#\Nemokyklai\BattleRoyale\bin\Release\protobuf-net.dll
+C:\Users\Kompiuteris\Desktop\c#\Nemokyklai\BattleRoyale\bin\Release\Newtonsoft.Json.dll
+C:\Users\Kompiuteris\Desktop\c#\Nemokyklai\BattleRoyale\obj\Release\BattleRoyale.dll
+C:\Users\Kompiuteris\Desktop\GtaNetwork\resources\BattleRoyale\BattleRoyale.dll
+C:\Users\Kompiuteris\Desktop\c#\Nemokyklai\BattleRoyale\obj\Release\BattleRoyale.csprojResolveAssemblyReference.cache
