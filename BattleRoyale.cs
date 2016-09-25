@@ -114,7 +114,7 @@ namespace BattleRoyale
 			players.Clear();
 			foreach (NetHandle p in API.getAllPlayers())
 			{
-				players.Add(new Player(p, true));
+				players.Add(new Player(p, true, API.getPlayerFromHandle(p)));
 			}
 		}
 
@@ -212,19 +212,5 @@ namespace BattleRoyale
 		}
 	}
 
-	
 
-	public class Player : Script
-	{
-		public NetHandle netHandle { get; set; }
-		public bool inBattleRoyale { get; set; }
-		public Client client { get { return API.getPlayerFromHandle(netHandle); } }
-
-		public Player() { }
-		public Player(NetHandle netHandle, bool inBattleRoyale)
-		{
-			this.netHandle = netHandle;
-			this.inBattleRoyale = inBattleRoyale;
-		}
-	}
 }

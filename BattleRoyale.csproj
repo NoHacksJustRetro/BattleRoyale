@@ -31,10 +31,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GTANetworkServer">
-      <HintPath>..\..\..\GtaNetwork\GTANetworkServer.exe</HintPath>
+      <HintPath>..\..\..\Desktop\GtaNetwork\GTANetworkServer.exe</HintPath>
     </Reference>
     <Reference Include="GTANetworkShared">
-      <HintPath>..\..\..\GtaNetwork\GTANetworkShared.dll</HintPath>
+      <HintPath>..\..\..\Desktop\GtaNetwork\GTANetworkShared.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,6 +52,7 @@
     <Compile Include="OnConnected.cs" />
     <Compile Include="OnPickup.cs" />
     <Compile Include="OnRespawn.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
