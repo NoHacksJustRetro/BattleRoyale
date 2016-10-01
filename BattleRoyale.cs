@@ -29,6 +29,8 @@ namespace BattleRoyale
 			SpawnPlayers();
 			SpawnWeapons();
 			SpawnVehicles();
+			SpawnObjects();
+
 			StartCountdown();
 		}
 
@@ -52,6 +54,21 @@ namespace BattleRoyale
 			foreach (Vehicle l in MainEntryPoint.Map.Vehicles)
 			{
 				API.createVehicle(l.Hash, l.Position, l.Rotation, 0, 0);
+			}
+
+		}
+
+		private void SpawnObjects()
+		{
+			API.consoleOutput("Spawning objects: ");
+			foreach (NetHandle h in API.getAllObjects())
+			{
+				API.deleteEntity(h);
+			}
+
+			foreach (Structure.Object w in MainEntryPoint.Map.Objects)
+			{
+				API.createObject(w.Model, w.Position, w.Rotation);
 			}
 
 		}
