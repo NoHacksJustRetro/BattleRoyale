@@ -6,18 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BattleRoyale
+namespace BattleRoyale.Structure
 {
 	public class Player 
 	{
-		public NetHandle netHandle { get; set; }
 		public bool inBattleRoyale { get; set; }
 		public Client client { get; set; }
 
 		public Player() { }
-		public Player(NetHandle netHandle, bool inBattleRoyale, Client client)
+		public Player(bool inBattleRoyale, Client client)
 		{
-			this.netHandle = netHandle;
 			this.inBattleRoyale = inBattleRoyale;
 			this.client = client;
 		}

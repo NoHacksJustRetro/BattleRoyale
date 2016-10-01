@@ -1,0 +1,15 @@
+{
+	"CountdownTime": 10,
+	"SphereScale": 1000,
+	"SphereLocation": {
+		"X": 0,
+		"Y": 0,
+		"Z": 0
+	},
+	"WaitingPosition": {
+		"X": -1157.60,
+		"Y": -8.06,
+		"Z": 47.53
+	},
+	"PlayersToStart": 7
+}

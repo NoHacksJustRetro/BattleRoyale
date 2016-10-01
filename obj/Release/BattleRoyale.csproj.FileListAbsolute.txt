@@ -11,3 +11,4 @@ C:\Users\Kompiuteris\Desktop\c#\Nemokyklai\BattleRoyale\obj\Release\BattleRoyale
 C:\Users\Kompiuteris\GtaNetwork\resources\BattleRoyale\BattleRoyale.dll
 C:\Users\Kompiuteris\source\Repos\BattleRoyale\obj\Release\BattleRoyale.csprojResolveAssemblyReference.cache
 C:\Users\Kompiuteris\source\Repos\BattleRoyale\obj\Release\BattleRoyale.dll
+C:\Users\Kompiuteris\Desktop\GtaNetwork\resources\BattleRoyale\BattleRoyale.dll.config

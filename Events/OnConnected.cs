@@ -1,13 +1,14 @@
-﻿using GTANetworkServer;
+﻿using BattleRoyale.Structure;
+using GTANetworkServer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BattleRoyale
+namespace BattleRoyale.Events
 {
-	class OnConnected : Script
+	class OnConnected : MainEntryPoint
 	{
 		public OnConnected()
 		{
@@ -16,9 +17,10 @@ namespace BattleRoyale
 
 		private void OnPlayerConnect(Client player)
 		{
-			API.setEntityPosition(player.CharacterHandle, Main.globalSettings.WaitingPosition);
+			API.setEntityPosition(player.CharacterHandle, Map.WaitingPosition);
 			API.setEntityInvincible(player.CharacterHandle, true);
-			Main.onCheckBattleRoyale();
+			Players.Add(new Player(false, player));
+			onCheckBattleRoyale();
 		}
 
 	}

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GTANetworkShared;
-namespace BattleRoyale
+namespace BattleRoyale.Events
 {
 	public class OnRespawn : Script
 	{
@@ -16,7 +16,7 @@ namespace BattleRoyale
 
 		private void OnPlayerRespawn(Client player)
 		{
-			API.setEntityPosition(player.CharacterHandle, Main.globalSettings.WaitingPosition);
+			API.setEntityPosition(player.CharacterHandle, MainEntryPoint.Map.WaitingPosition);
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using GTANetworkServer;
+﻿using BattleRoyale.Structure;
+using GTANetworkServer;
 using GTANetworkShared;
 using System;
 using System.Collections.Generic;
@@ -7,71 +8,33 @@ using System.Linq;
 using System.Text;
 using System.Timers;
 
-namespace BattleRoyale
-{
-	[Serializable]
-	public struct BattleRoyaleSettings
-	{
-		public List<Vector3> spawnPositions { get; set; }
-		public List<Vector3> weaponPositions { get; set; }
-		public List<Vector3> vehiclePositions { get; set; }
-		public int countdownTime { get; set; }
-		public float SphereScale { get; set; }
-		public Vector3 SphereLocation { get; set; }	
-	}
 
+namespace BattleRoyale
+{ 
 	public class BattleRoyale : Script
 	{
-		public BattleRoyaleSettings settings;
 		private Timer countdownTimer;
 		private Timer sphereScaleTimer;
 		private int currentScalePercantage = 100;
 		public bool currentlyRunning = false;
-		public List<Player> players = new List<Player>();
 
-		public BattleRoyale()
-		{
-			API.onResourceStart += API_onResourceStart;
-		}
-
-		private void API_onResourceStart()
-		{
-			StartBattleRoyale();
-
-		}
+		public BattleRoyale() { }
 
 		public void StartBattleRoyale()
 		{
 			API.consoleOutput("Starting battle royale");
 			currentlyRunning = true;
-			LoadSettings();
-			DisplaySettings();
 			GetPlayers();
 			ResetStats();
 			SpawnPlayers();
 			SpawnWeapons();
 			SpawnVehicles();
-
 			StartCountdown();
-		}
-
-		private void DisplaySettings()
-		{
-			API.consoleOutput("~~~ BATTLE ROYALE SETTINGS ~~~");
-			API.consoleOutput("Spawn Positions: ");
-			foreach(Vector3 p in settings.spawnPositions)
-			{
-				API.consoleOutput(p.ToString());
-			}
-			API.consoleOutput("Sphere spawn location: " + settings.SphereLocation.ToString());
-			API.consoleOutput("Sphere scale: " + settings.SphereScale);
-			API.consoleOutput("Countdown time: " + settings.countdownTime);
-			API.consoleOutput("~~~ BATTLE ROYALE SETTINGS ~~~");
 		}
 
 		private void GiveWeapons()
 		{
-			foreach(Player p in players)
+			foreach(Player p in MainEntryPoint.Players)
 			{
 				API.removeAllPlayerWeapons(p.client);
 				API.givePlayerWeapon(p.client, WeaponHash.Pistol, 60, true, true);
@@ -86,9 +49,9 @@ namespace BattleRoyale
 				API.deleteEntity(h);
 			}
 
-			foreach (Vector3 l in settings.vehiclePositions)
+			foreach (Vehicle l in MainEntryPoint.Map.Vehicles)
 			{
-				API.createVehicle(VehicleHash.Dubsta, l, new Vector3(0, 0, 0), 0, 0);
+				API.createVehicle(l.Hash, l.Position, l.Rotation, 0, 0);
 			}
 
 		}
@@ -101,9 +64,9 @@ namespace BattleRoyale
 				API.deleteEntity(h);
 			}
 
-			foreach(Vector3 l in settings.weaponPositions)
+			foreach(Weapon w in MainEntryPoint.Map.Weapons)
 			{
-				API.createPickup(PickupHash.PICKUP_WEAPON_MICROSMG, l, new Vector3(0, 0, 0), 50, 60000);
+				API.createPickup(w.Hash, w.Position, new Vector3(0,0,0), w.Ammo, 240 * 1000);
 			}
 		
 		}
@@ -111,35 +74,27 @@ namespace BattleRoyale
 		private void GetPlayers()
 		{
 			API.consoleOutput("Getting players");
-			players.Clear();
-			foreach (Client p in API.getAllPlayers())
+			foreach (Player p in MainEntryPoint.Players)
 			{
-				players.Add(new Player(p.CharacterHandle, true, p));
+				p.inBattleRoyale = true;
 			}
-		}
-
-		private void LoadSettings()
-		{
-			API.consoleOutput("Loading settings");
-			string json = File.ReadAllText(API.getResourceFolder() + "/Settings/data.json");
-			settings = API.fromJson(json).ToObject<BattleRoyaleSettings>();
 		}
 
 		private void StartCountdown()
 		{
-			API.sendChatMessageToAll(settings.countdownTime + " seconds till the next Battle Royale");
+			API.sendChatMessageToAll(MainEntryPoint.Map.CountdownTime + " seconds till the next Battle Royale");
 			countdownTimer = new Timer();
 			countdownTimer.Elapsed += new ElapsedEventHandler(countdownTimer_Tick);
 			countdownTimer.Interval = 1000;
 			countdownTimer.Start();
-			API.consoleOutput("Countdown start, " + settings.countdownTime + " left.");
+			API.consoleOutput("Countdown start, " + MainEntryPoint.Map.CountdownTime + " left.");
 		}
 
 		private void countdownTimer_Tick(object sender, ElapsedEventArgs e)
 		{
 			API.consoleOutput("Countdown timer tick");
-			settings.countdownTime--;
-			if (settings.countdownTime <= 0)
+			MainEntryPoint.Map.CountdownTime--;
+			if (MainEntryPoint.Map.CountdownTime <= 0)
 			{
 				countdownTimer.Stop();
 				CountdownFinished();
@@ -155,12 +110,12 @@ namespace BattleRoyale
 		{
 			API.consoleOutput("Countdown Finished, Battle Royale has been started");
 			API.sendChatMessageToAll("Battle Royale has been started!");
-			foreach (Player p in players)
+			foreach (Player p in MainEntryPoint.Players)
 			{
 				if(p.inBattleRoyale)
 				{				
 					API.freezePlayer(p.client, false);
-					API.triggerClientEvent(p.client, "pennedin_roundstart", settings.SphereLocation, settings.SphereScale);
+					API.triggerClientEvent(p.client, "pennedin_roundstart", MainEntryPoint.Map.SphereLocation, MainEntryPoint.Map.SphereScale);
 				}	
 			}
 
@@ -175,8 +130,8 @@ namespace BattleRoyale
 			
 			API.sendChatMessageToAll("Scaling down playable area!");
 			currentScalePercantage -= 15;
-			var currentSphereScale = (settings.SphereScale / 100) * (currentScalePercantage + 15);
-			var nextSphereScale = (settings.SphereScale / 100) * currentScalePercantage;
+			var currentSphereScale = (MainEntryPoint.Map.SphereScale / 100) * (currentScalePercantage + 15);
+			var nextSphereScale = (MainEntryPoint.Map.SphereScale / 100) * currentScalePercantage;
 			API.consoleOutput("Scaling down playable area to " + nextSphereScale);
 			API.triggerClientEventForAll("pennedin_setscaledestination", currentSphereScale, nextSphereScale , 20000);
 		}
@@ -185,14 +140,14 @@ namespace BattleRoyale
 		public void SpawnPlayers() 
 		{
 			API.consoleOutput("Spawning players");
-			for (int i = 0; i < players.Count; i++)
+			for (int i = 0; i < MainEntryPoint.Players.Count; i++)
 			{
-				Player p = players[i];
+				Player p = MainEntryPoint.Players[i];
 				if(p.inBattleRoyale)
 				{
-					API.setEntityPosition(p.netHandle, settings.spawnPositions[i]);
+					API.setEntityPosition(p.client.CharacterHandle, MainEntryPoint.Map.Spawns[i]);
 					API.freezePlayer(p.client, true);
-					API.setEntityInvincible(p.netHandle, false);
+					API.setEntityInvincible(p.client.CharacterHandle, false);
 				}
 			}
 		}
@@ -200,7 +155,7 @@ namespace BattleRoyale
 		public void ResetStats()
 		{
 			API.consoleOutput("Reseting stats");
-			foreach (Player p in players)
+			foreach (Player p in MainEntryPoint.Players)
 			{
 				if(p.inBattleRoyale)
 				{
@@ -211,6 +166,4 @@ namespace BattleRoyale
 			}
 		}
 	}
-
-
 }
