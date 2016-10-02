@@ -97,13 +97,6 @@ API.onServerEventTrigger.connect(function (eventName, args) {
 
 
 API.onUpdate.connect(function(sender, e) {
-	API.callNative("DISABLE_CONTROL_ACTION", 0, 75, true);
-    API.callNative("DISABLE_CONTROL_ACTION", 0, 25, true);
-    API.callNative("DISABLE_CONTROL_ACTION", 0, 68, true);
-    API.callNative("DISABLE_CONTROL_ACTION", 0, 91, true);
-
-    if (roundEnd) return;
-
     if (interpolationStart != 0 && marker != null) {
     	var cTime = API.getGlobalTime() - interpolationStart;
     	var dur = interpolationEnd;
