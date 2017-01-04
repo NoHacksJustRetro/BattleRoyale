@@ -24,7 +24,7 @@ namespace BattleRoyale.Events
 				{
 					if (p.inBattleRoyale)
 					{
-						API.sendChatMessageToAll(player.Name + " has been killed.");
+						API.sendChatMessageToAll(player.name + " has been killed.");
 						p.inBattleRoyale = false;
 					}
 					break;

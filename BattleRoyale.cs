@@ -51,7 +51,7 @@ namespace BattleRoyale
 				API.deleteEntity(h);
 			}
 
-			foreach (Vehicle l in MainEntryPoint.Map.Vehicles)
+			foreach (Structure.Vehicle l in MainEntryPoint.Map.Vehicles)
 			{
 				API.createVehicle(l.Hash, l.Position, l.Rotation, 0, 0);
 			}
@@ -162,9 +162,9 @@ namespace BattleRoyale
 				Player p = MainEntryPoint.Players[i];
 				if(p.inBattleRoyale)
 				{
-					API.setEntityPosition(p.client.CharacterHandle, MainEntryPoint.Map.Spawns[i]);
+					API.setEntityPosition(p.client.handle, MainEntryPoint.Map.Spawns[i]);
 					API.freezePlayer(p.client, true);
-					API.setEntityInvincible(p.client.CharacterHandle, false);
+					API.setEntityInvincible(p.client.handle, false);
 				}
 			}
 		}

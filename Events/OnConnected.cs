@@ -17,8 +17,8 @@ namespace BattleRoyale.Events
 
 		private void OnPlayerConnect(Client player)
 		{
-			API.setEntityPosition(player.CharacterHandle, Map.WaitingPosition);
-			API.setEntityInvincible(player.CharacterHandle, true);
+			API.setEntityPosition(player.handle, Map.WaitingPosition);
+			API.setEntityInvincible(player.handle, true);
 			Players.Add(new Player(false, player));
 			onCheckBattleRoyale();
 		}

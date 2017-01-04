@@ -36,7 +36,7 @@ namespace BattleRoyale
 			API.consoleOutput("Waiting location: " + Map.WaitingPosition.ToString());
 			API.consoleOutput("Spawn Positions: ");
 
-			foreach (Vehicle p in Map.Vehicles)
+			foreach (Structure.Vehicle p in Map.Vehicles)
 				API.consoleOutput(p.Hash + " at " + p.Position);
 			foreach (Structure.Object o in Map.Objects)
 				API.consoleOutput(o.Model + " at " + o.Position);
@@ -77,7 +77,7 @@ namespace BattleRoyale
 			Map map = JsonConvert.DeserializeObject<Map>(mapJSON);
 
 			string vehiclesJSON = File.ReadAllText(rootPath + "/vehicles.json");	
-			map.Vehicles = JsonConvert.DeserializeObject<List<Vehicle>>(vehiclesJSON);
+			map.Vehicles = JsonConvert.DeserializeObject<List<Structure.Vehicle>>(vehiclesJSON);
 
 			string objectsJSON = File.ReadAllText(rootPath + "/objects.json");		
 			map.Objects = JsonConvert.DeserializeObject<List<Structure.Object>>(objectsJSON);

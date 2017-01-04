@@ -16,7 +16,7 @@ namespace BattleRoyale.Events
 
 		private void OnPlayerRespawn(Client player)
 		{
-			API.setEntityPosition(player.CharacterHandle, MainEntryPoint.Map.WaitingPosition);
+			API.setEntityPosition(player.handle, MainEntryPoint.Map.WaitingPosition);
 		}
 	}
 }
